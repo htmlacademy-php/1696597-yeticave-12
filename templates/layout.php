@@ -44,10 +44,7 @@
         </nav>
       </div>
     </header>
-
-    <main class="container">
-      <?= $main_template ?>
-    </main>
+    <?= $content ?>
   </div>
 
   <footer class="main-footer">

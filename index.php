@@ -61,9 +61,9 @@ function format_price($lot_price)
     return $displayed_price . ' ₽';
 }
 
-$main_template = include_template('main.php', ['categories' => $categories, 'lots' => $lots]);
+$content = include_template('main.php', ['categories' => $categories, 'lots' => $lots]);
 $layout_template = include_template('layout.php', [
-    'main_template' => $main_template,
+    'content' => $content,
     'page_title' => $page_title,
     'is_auth' => $is_auth,
     'user_name' => $user_name,
