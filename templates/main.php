@@ -37,7 +37,7 @@
               }
               ?>
               <div class="lot__timer timer <?= $timer_finishing ?>">
-                <?php print($time_to_expiry[0] . ':' . $time_to_expiry[1]); ?>
+                <?= $time_to_expiry[0] . ':' . $time_to_expiry[1] ?>
               </div>
             </div>
           </div>
