@@ -18,8 +18,8 @@ CREATE UNIQUE INDEX user_name_idx ON users(username);
 
 CREATE TABLE categories(
   id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-  name VARCHAR(30) NOT NULL UNIQUE,
-  code VARCHAR(30) NOT NULL UNIQUE
+  name VARCHAR(255) NOT NULL UNIQUE,
+  code VARCHAR(255) NOT NULL UNIQUE
 );
 
 CREATE UNIQUE INDEX category_name_idx ON categories(name);
@@ -30,9 +30,9 @@ CREATE TABLE lots(
   user_id INT NOT NULL,
   category_id INT NULL,
   winner_id INT NULL,
-  name VARCHAR(50) NOT NULL,
-  description VARCHAR(50) NOT NULL,
-  img_url VARCHAR(50) NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  description VARCHAR(255) NOT NULL,
+  img_url VARCHAR(255) NOT NULL,
   date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
   date_expiry TIMESTAMP NOT NULL,
   initial_price DECIMAL(10,2) NOT NULL,
