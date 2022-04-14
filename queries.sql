@@ -159,11 +159,8 @@ WHERE
   lots.winner_id IS NULL
   AND lots.date_expiry > NOW()
 GROUP BY
-  lots.name,
-  lots.img_url,
-  lots.initial_price,
-  categories.name;
-
+  lots.id;
+  
 /* Showing ID, name of the lot and its category with ID = 5 */
 SELECT
   lots.id,
