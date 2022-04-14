@@ -63,8 +63,8 @@ VALUES
     '2014 Rossignol District Snowboard',
     'description 1',
     'img/lot-1.jpg',
-    '2022-04-02 15:00',
-    '2022-04-05 15:00',
+    '2022-04-03 15:00',
+    '2022-04-06 15:00',
     10999,
     100
   ),
@@ -75,8 +75,8 @@ VALUES
     'DC Ply Mens 2016/2017 Snowboard',
     'description 2',
     'img/lot-2.jpg',
-    '2022-04-03 16:00',
-    '2022-04-06 16:00',
+    '2022-04-04 16:00',
+    '2022-04-07 16:00',
     159999,
     100
   ),
@@ -87,20 +87,20 @@ VALUES
     'Крепления Union Contact Pro 2015 года размер L/XL',
     'description 3',
     'img/lot-3.jpg',
-    '2022-04-12 17:00',
-    '2022-04-15 17:00',
+    '2022-04-13 17:00',
+    '2022-04-16 17:00',
     8000,
     100
   ),
   (
     1,
-    NULL,
+    3,
     NULL,
     'Ботинки для сноуборда DC Mutiny Charocal',
     'description 4',
     'img/lot-4.jpg',
-    '2022-04-12 16:30',
-    '2022-04-15 16:30',
+    '2022-04-13 16:30',
+    '2022-04-16 16:30',
     10999,
     100
   ),
@@ -111,8 +111,8 @@ VALUES
     'Куртка для сноуборда DC Mutiny Charocal',
     'description 5',
     'img/lot-5.jpg',
-    '2022-04-10 15:00',
     '2022-04-13 15:00',
+    '2022-04-16 15:00',
     7500,
     100
   ),
@@ -123,8 +123,8 @@ VALUES
     'Маска Oakley Canopy',
     'description 6',
     'img/lot-6.jpg',
-    '2022-04-12 11:00',
-    '2022-04-15 11:00',
+    '2022-04-13 11:00',
+    '2022-04-16 11:00',
     5400,
     100
   );
@@ -133,9 +133,9 @@ VALUES
 INSERT INTO
   bids(user_id, lot_id, date_created, price)
 VALUES
-  (3, 4, '2022-04-12 16:55', 11000),
-  (2, 4, '2022-04-12 16:59', 12599),
-  (2, 6, '2022-04-12 17:54', 5500);
+  (3, 4, '2022-04-13 16:55', 11000),
+  (2, 4, '2022-04-13 16:59', 12599),
+  (2, 6, '2022-04-13 17:54', 5500);
 
 /* Showing the names of all categories */
 SELECT
@@ -144,39 +144,34 @@ FROM
   categories;
 
 /* Showing non-expired lots with no winner assigned, displaying name,
- lot image's URL, initial price, highest bid (if any), category (if any) */
+ lot image's URL, initial price, highest bid, category */
 SELECT
   lots.name,
   lots.img_url,
   lots.initial_price,
-  IF(
-    b.current_max_price IS NOT NULL,
-    b.current_max_price,
-    lots.initial_price
-  ) AS current_price,
-  IF(categories.name IS NULL, '—', categories.name) AS category_name
+  MAX(bids.price) AS current_price,
+  categories.name
 FROM
   lots
-  LEFT JOIN (
-    SELECT
-      lot_id,
-      MAX(price) AS current_max_price
-    FROM
-      bids
-    GROUP BY
-      lot_id
-  ) AS b ON lots.id = b.lot_id
-  LEFT JOIN categories ON lots.category_id = categories.id
+  INNER JOIN categories ON lots.category_id = categories.id
+  LEFT JOIN bids ON lots.id = bids.lot_id
 WHERE
-  date_expiry > NOW()
-  AND winner_id IS NULL;
+  lots.winner_id IS NULL
+  AND lots.date_expiry > NOW()
+GROUP BY
+  lots.name,
+  lots.img_url,
+  lots.initial_price,
+  categories.name;
 
-/* Showing ID and name of the lot with ID = 5 */
+/* Showing ID, name of the lot and its category with ID = 5 */
 SELECT
   lots.id,
-  lots.name
+  lots.name,
+  categories.name
 FROM
   lots
+  INNER JOIN categories ON lots.category_id = categories.id
 WHERE
   lots.id = 5;
 
@@ -189,7 +184,7 @@ WHERE
   lots.id = 4;
 
 /* Showing all columns from bids associated with lot with ID = 4
-  Grouping the displayed lots by date with later date lots displayed first */
+ Grouping the displayed lots by date with later date lots displayed first */
 SELECT
   *
 FROM

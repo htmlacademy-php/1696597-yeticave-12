@@ -28,7 +28,7 @@ CREATE UNIQUE INDEX category_code_idx ON categories(code);
 CREATE TABLE lots(
   id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
   user_id INT NOT NULL,
-  category_id INT NULL,
+  category_id INT NOT NULL,
   winner_id INT NULL,
   name VARCHAR(255) NOT NULL,
   description VARCHAR(255) NOT NULL,
@@ -38,8 +38,8 @@ CREATE TABLE lots(
   initial_price DECIMAL(10,2) NOT NULL,
   bidding_increment DECIMAL(10, 2) NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-  FOREIGN KEY (winner_id) REFERENCES users(id) ON DELETE SET NULL,
-  FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL
+  FOREIGN KEY (winner_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE RESTRICT
 );
 
 CREATE INDEX lot_name_idx ON lots(name);
