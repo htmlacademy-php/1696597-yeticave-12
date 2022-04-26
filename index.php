@@ -62,16 +62,14 @@ $sql = "SELECT
   lots.name,
   lots.img_url,
   lots.initial_price,
-  MAX(bids.price) AS current_price,
   categories.name AS category,
   lots.date_expiry AS date_expiry
 FROM
   lots
   INNER JOIN categories ON lots.category_id = categories.id
-  LEFT JOIN bids ON lots.id = bids.lot_id
-/*WHERE
-  lots.winner_id IS NULL */
-  /* AND lots.date_expiry > NOW() */
+WHERE
+  lots.winner_id IS NULL
+  AND lots.date_expiry > NOW()
 GROUP BY
   lots.id
 ORDER BY
