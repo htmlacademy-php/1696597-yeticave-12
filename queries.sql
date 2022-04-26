@@ -34,12 +34,12 @@ VALUES
 INSERT INTO
   categories(name, code)
 VALUES
-  ('Доски и лыжи', 'skiboards'),
-  ('Крепления', 'bindings'),
+  ('Доски и лыжи', 'boards'),
+  ('Крепления', 'attachment'),
   ('Ботинки', 'boots'),
-  ('Одежда', 'skiwear'),
+  ('Одежда', 'clothing'),
   ('Инструменты', 'tools'),
-  ('Разное', 'misc');
+  ('Разное', 'other');
 
 /* Populating table 'lots' */
 INSERT INTO
@@ -160,7 +160,7 @@ WHERE
   AND lots.date_expiry > NOW()
 GROUP BY
   lots.id;
-  
+
 /* Showing ID, name of the lot and its category with ID = 5 */
 SELECT
   lots.id,

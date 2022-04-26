@@ -4,10 +4,10 @@
     <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное снаряжение.</p>
     <ul class="promo__list">
       <?php foreach ($categories as $category) : ?>
-        <li class="promo__item promo__item--boards">
-          <a class="promo__link" href="pages/all-lots.html"><?= htmlspecialchars($category); ?></a>
+        <li class="promo__item promo__item--<?= $category['code'] ?>">
+          <a class="promo__link" href="pages/all-lots.html"><?= htmlspecialchars($category['name']); ?></a>
         </li>
-      <? endforeach; ?>
+      <?php endforeach; ?>
     </ul>
   </section>
   <section class="lots">
@@ -27,9 +27,9 @@
             <div class="lot__state">
               <div class="lot__rate">
                 <span class="lot__amount">Стартовая цена</span>
-                <span class="lot__cost"><?= htmlspecialchars(format_price($lot['price'])); ?></span>
+                <span class="lot__cost"><?= htmlspecialchars(format_price($lot['initial_price'])); ?></span>
               </div>
-              <?php $time_to_expiry = get_time_to_expiry($lot['expiry_date']);
+              <?php $time_to_expiry = get_time_to_expiry($lot['date_expiry']);
               if (intval($time_to_expiry[0]) < 1) {
                 $timer_finishing = 'timer--finishing';
               } else {
@@ -42,7 +42,7 @@
             </div>
           </div>
         </li>
-      <? endforeach; ?>
+      <?php endforeach; ?>
     </ul>
   </section>
 </main>
