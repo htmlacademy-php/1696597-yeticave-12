@@ -142,5 +142,30 @@ function include_template($name, array $data = []) {
 
     return $result;
 }
+/**
+ * Returns the number of hours and minutes left until $expiry_date
+ * as an array of strings in the format ['hh', 'mm']
+ */
+function get_time_to_expiry(string $expiry_date): array
+{
+    $now = date('Y-m-d H:i');
+    $diff = strtotime($expiry_date) - strtotime($now);
+    if ($diff > 0) {
+        $hours = floor($diff/(60*60));
+        $minutes = floor(($diff - ($hours*60*60))/60);
+        $timer = [$hours, $minutes];
+
+        // padding single-digit timer values to get double digits, i.e. '0:8' to '00:08'
+        foreach ($timer as $key => $value) {
+            if ($value < 0) {
+                $value = 0;
+            }
+            $timer[$key] = str_pad(strval($value), 2, '0', STR_PAD_LEFT);
+        }
+        return $timer;
+    } else {
+        return ['00', '00'];
+    }
+}
 
 
